@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHARMA-CO(bot)-LOGY — AINN23/00109</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #0a2463;
+    --azul-med: #1e40af;
+    --azul-claro: #3b82f6;
+    --verde: #00b894;
+    --amarillo: #fbbf24;
+    --blanco: #f8fafc;
+    --gris-claro: #e2e8f0;
+    --gris: #64748b;
+    --texto: #0f172a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--blanco); color: var(--texto); line-height: 1.7; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--azul);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+    box-shadow: 0 2px 16px rgba(10,36,99,.35);
+    flex-wrap: wrap; gap: .5rem;
+  }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.05rem; color: #fff; letter-spacing: .02em; padding: 1rem 0; white-space: nowrap; }
+  .nav-logo span { color: #fbbf24; }
+  nav ul { display: flex; list-style: none; gap: .2rem; flex-wrap: wrap; }
+  nav ul li a { display: block; padding: .55rem .85rem; color: rgba(255,255,255,.82); font-size: .82rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; border-radius: 6px; transition: background .2s, color .2s; }
+  nav ul li a:hover, nav ul li a.active { background: rgba(255,255,255,.13); color: #fff; }
+
+  .hero { background: linear-gradient(135deg, #0a2463 0%, #1e3a8a 55%, #1d4ed8 100%); color: #fff; padding: 5rem 2rem 4rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 30%, rgba(59,130,246,.25) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(0,184,148,.15) 0%, transparent 50%); }
+  .hero-content { position: relative; max-width: 820px; margin: 0 auto; }
+  .hero-badge { display: inline-block; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); color: #fbbf24; font-family: 'Syne', sans-serif; font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: .35rem 1rem; border-radius: 999px; margin-bottom: 1.4rem; }
+  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.2rem; }
+  .hero h1 em { color: #fbbf24; font-style: normal; }
+  .hero-sub { font-size: 1.05rem; font-weight: 300; opacity: .85; max-width: 600px; margin: 0 auto 2rem; }
+  .hero-pills { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+  .pill { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: #fff; font-size: .78rem; padding: .3rem .85rem; border-radius: 999px; }
+  .pill.accent { background: #00b894; border-color: #00b894; }
+
+  section { padding: 4rem 2rem; }
+  .container { max-width: 960px; margin: 0 auto; }
+  .section-label { font-family: 'Syne', sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: #3b82f6; margin-bottom: .5rem; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: #0a2463; margin-bottom: 1.5rem; border-left: 4px solid #00b894; padding-left: 1rem; }
+
+  #introduccion { background: #fff; }
+  .context-box { background: linear-gradient(135deg, #eff6ff, #f0fdf4); border: 1px solid #e2e8f0; border-radius: 16px; padding: 2rem 2.5rem; margin-bottom: 2.5rem; }
+  .context-box p { color: #64748b; font-size: .95rem; }
+  .context-box p strong { color: #0a2463; }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.2rem; margin-bottom: 2.5rem; }
+  .stat-card { background: #0a2463; border-radius: 14px; padding: 1.5rem; text-align: center; color: #fff; }
+  .stat-card .num { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; line-height: 1; color: #fbbf24; }
+  .stat-card .lbl { font-size: .82rem; opacity: .8; margin-top: .3rem; }
+
+  #lineas { background: #f8fafc; }
+  .lineas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+  .linea-card { background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; padding: 1.4rem 1.6rem; transition: box-shadow .2s, transform .2s; }
+  .linea-card:hover { box-shadow: 0 8px 28px rgba(10,36,99,.1); transform: translateY(-3px); }
+  .linea-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2rem; color: #e2e8f0; line-height: 1; margin-bottom: .3rem; }
+  .linea-card h3 { font-size: .88rem; font-weight: 600; color: #0a2463; margin-bottom: .5rem; }
+  .linea-card p { font-size: .83rem; color: #64748b; }
+
+  #materiales { background: #fff; }
+  .materiales-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; }
+  .mat-group { background: #f8fafc; border-radius: 14px; border: 1px solid #e2e8f0; overflow: hidden; }
+  .mat-header { background: #0a2463; color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; padding: .75rem 1.2rem; display: flex; align-items: center; gap: .5rem; }
+  .mat-body { padding: 1rem 1.2rem; }
+  .mat-body ul { list-style: none; }
+  .mat-body ul li { font-size: .82rem; color: #64748b; padding: .25rem 0; border-bottom: 1px solid #e2e8f0; display: flex; gap: .5rem; align-items: flex-start; }
+  .mat-body ul li:last-child { border-bottom: none; }
+  .mat-body ul li::before { content: '→'; color: #3b82f6; flex-shrink: 0; font-size: .75rem; margin-top: .15rem; }
+
+  #vision { background: linear-gradient(135deg, #0a2463 0%, #1e3a8a 100%); color: #fff; }
+  #vision .section-title { color: #fff; border-color: #fbbf24; }
+  #vision .section-label { color: #fbbf24; }
+  .vision-box { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; }
+  .vision-box p { font-size: 1.05rem; font-weight: 300; line-height: 1.8; }
+  .mejoras-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; list-style: none; }
+  .mejoras-list li { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 1rem 1.2rem; font-size: .88rem; display: flex; gap: .75rem; align-items: flex-start; }
+  .mejoras-list li::before { content: '✦'; color: #fbbf24; font-size: .75rem; flex-shrink: 0; margin-top: .2rem; }
+
+  #documentacion { background: #f8fafc; }
+  .doc-intro { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.5rem 2rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .doc-intro p { color: #64748b; font-size: .9rem; flex: 1; min-width: 200px; }
+  .btn { display: inline-block; background: #0a2463; color: #fff; font-family: 'Syne', sans-serif; font-size: .82rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .65rem 1.4rem; border-radius: 8px; text-decoration: none; border: none; cursor: pointer; transition: background .2s, transform .15s; white-space: nowrap; }
+  .btn:hover { background: #1e40af; transform: translateY(-1px); }
+  .btn.verde { background: #00b894; }
+  .btn.verde:hover { background: #00a37e; }
+  .doc-cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .doc-cat { background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.2rem 1.4rem; transition: box-shadow .2s; }
+  .doc-cat:hover { box-shadow: 0 6px 20px rgba(10,36,99,.08); }
+  .doc-cat h4 { font-family: 'Syne', sans-serif; font-size: .82rem; font-weight: 700; color: #0a2463; margin-bottom: .6rem; display: flex; gap: .5rem; align-items: center; }
+  .doc-cat ul { list-style: none; }
+  .doc-cat ul li { font-size: .78rem; color: #64748b; padding: .18rem 0; }
+
+  #formulario { background: #fff; }
+  .form-wrap { max-width: 600px; margin: 0 auto; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2.5rem; }
+  .form-wrap p { color: #64748b; font-size: .9rem; margin-bottom: 1.5rem; }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label { display: block; font-size: .82rem; font-weight: 600; color: #0a2463; margin-bottom: .35rem; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: .65rem .9rem; border: 1.5px solid #e2e8f0; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: .88rem; color: #0f172a; background: #fff; transition: border-color .2s; outline: none; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #3b82f6; }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-note { font-size: .75rem; color: #64748b; margin-top: .3rem; }
+
+  footer { background: #0a2463; color: rgba(255,255,255,.65); text-align: center; padding: 2rem; font-size: .82rem; }
+  footer strong { color: #fff; }
+  .footer-logos { display: flex; justify-content: center; align-items: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .footer-badge { border: 1px solid rgba(255,255,255,.2); border-radius: 8px; padding: .4rem .9rem; font-size: .72rem; color: rgba(255,255,255,.7); font-weight: 500; }
+
+  .tabs { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .tab-btn { padding: .5rem 1.1rem; border: 1.5px solid #e2e8f0; border-radius: 8px; background: #fff; font-family: 'Syne', sans-serif; font-size: .8rem; font-weight: 600; color: #64748b; cursor: pointer; transition: all .2s; }
+  .tab-btn.active, .tab-btn:hover { background: #0a2463; border-color: #0a2463; color: #fff; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .sinoptico-box { background: linear-gradient(135deg, #eff6ff, #e0f2fe); border: 2px dashed #3b82f6; border-radius: 16px; padding: 3rem 2rem; text-align: center; }
+  .sinoptico-box .icon-big { font-size: 3rem; margin-bottom: 1rem; display: block; }
+  .sinoptico-box p { font-size: .9rem; color: #64748b; }
+
+  .galeria-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+  .galeria-item { aspect-ratio: 4/3; background: linear-gradient(135deg, #e0e7ff, #dbeafe); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #1e40af; font-size: .78rem; font-weight: 500; border: 1px dashed #3b82f6; flex-direction: column; gap: .4rem; }
+  .galeria-item span { font-size: 1.8rem; }
+
+  @media (max-width: 640px) {
+    nav { padding: .5rem 1rem; }
+    .hero { padding: 3rem 1rem 2.5rem; }
+    section { padding: 2.5rem 1rem; }
+    .form-wrap { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">PHARMA-CO<span>(bot)</span>-LOGY</div>
+  <ul>
+    <li><a href="#introduccion" class="active">Introducción</a></li>
+    <li><a href="#lineas">Líneas</a></li>
+    <li><a href="#materiales">Materiales</a></li>
+    <li><a href="#vision">Visión</a></li>
+    <li><a href="#documentacion">Documentación</a></li>
+    <li><a href="#formulario">Solicitar docs</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">AINN23/00109</div>
+    <h1>PHARMA-CO<em>(bot)</em>-LOGY</h1>
+    <p class="hero-sub">Proyecto de innovación e investigación aplicada y transferencia del conocimiento en la Formación Profesional — Plan de Recuperación, Transformación y Resiliencia · NextGenerationEU</p>
+    <div class="hero-pills">
+      <span class="pill">🤖 Robótica colaborativa</span>
+      <span class="pill">💊 Automatización farmacéutica</span>
+      <span class="pill">🏭 Industria 4.0</span>
+      <span class="pill accent">Convocatoria 2023</span>
+    </div>
+  </div>
+</header>
+
+<section id="introduccion">
+  <div class="container">
+    <div class="section-label">Sobre el proyecto</div>
+    <h2 class="section-title">Introducción</h2>
+    <div class="context-box">
+      <p><strong>Contexto:</strong> El proyecto se enmarca dentro de las Ayudas destinadas a la realización de proyectos de innovación e investigación aplicadas y transferencia del conocimiento en la formación profesional en el año 2023, en el marco del <strong>Plan de recuperación, transformación y resiliencia</strong>, financiado por la Unión Europea — <strong>Next Generation EU</strong>.</p>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="num">+30</div><div class="lbl">Alumnos implicados</div></div>
+      <div class="stat-card"><div class="num">+10</div><div class="lbl">Profesores</div></div>
+      <div class="stat-card"><div class="num">6</div><div class="lbl">Líneas temáticas</div></div>
+      <div class="stat-card"><div class="num">2023</div><div class="lbl">Convocatoria</div></div>
+    </div>
+    <div class="sinoptico-box" style="margin-bottom: 2rem;">
+      <span class="icon-big">📷</span>
+      <h3 style="font-family:'Syne',sans-serif; color:#0a2463; margin-bottom:.5rem;">Foto del proyecto</h3>
+      <p>Aquí irá la imagen principal del proyecto cuando esté disponible.<br><em>Sustitúyela en Google Sites con el bloque "Imagen".</em></p>
+    </div>
+    <h3 style="font-family:'Syne',sans-serif;color:#0a2463;font-size:1.1rem;margin-bottom:1rem;font-weight:700;">Participantes</h3>
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:2rem 1.5rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap;">
+      <img src="logo-salesianos.png" alt="Salesianos Burgos P. Aramburu" style="height:90px;width:auto;object-fit:contain;">
+      <img src="logo-bernat-ferrer.png" alt="INS Bernat el Ferrer" style="height:90px;width:auto;object-fit:contain;">
+      <img src="logo-ingaut.png" alt="INGAUT Ingeniería" style="height:90px;width:auto;object-fit:contain;">
+    </div>
+    <h3 style="font-family:'Syne',sans-serif;color:#0a2463;font-size:1.1rem;margin-bottom:1rem;font-weight:700;">Agradecimientos</h3>
+    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:2rem 1.5rem;display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap;">
+      <img src="logo-ur.png" alt="Universal Robots" style="height:90px;width:auto;object-fit:contain;">
+      <img src="logo-desantiago.png" alt="Grupo De Santiago Automoción" style="height:90px;width:auto;object-fit:contain;">
+    </div>
+  </div>
+</section>
+
+<section id="lineas">
+  <div class="container">
+    <div class="section-label">Ámbitos de trabajo</div>
+    <h2 class="section-title">Líneas Temáticas</h2>
+    <div class="lineas-grid">
+      <div class="linea-card"><div class="linea-num">01</div><h3>Innovación tecnológica y transferencia</h3><p>Innovación de procesos y transferencia de conocimiento entre empresas, entidades y centros de FP a nivel nacional, autonómico y local.</p></div>
+      <div class="linea-card"><div class="linea-num">02</div><h3>Digitalización y competencias</h3><p>Desarrollo de competencias vinculadas a la digitalización: Industria 4.0, redes 5G y economía circular.</p></div>
+      <div class="linea-card"><div class="linea-num">03</div><h3>Equilibrio de género — STEAM</h3><p>Promoción del acceso de la mujer a perfiles STEAM en FP y su inserción profesional en sectores tecnológicos.</p></div>
+      <div class="linea-card"><div class="linea-num">04</div><h3>Competencia emprendedora</h3><p>Creación de estructuras como viveros e incubadoras de empresas vinculadas a centros de FP para facilitar la transición al mercado laboral.</p></div>
+      <div class="linea-card"><div class="linea-num">05</div><h3>Innovación metodológica</h3><p>Diseño y testeo de retos formativos que permitan la innovación metodológica basada en retos e incorporen competencias transversales.</p></div>
+      <div class="linea-card"><div class="linea-num">06</div><h3>Ecosistemas de innovación</h3><p>Desarrollo de ecosistemas estables entre agentes del sector: centros de FP, empresas y entidades especializadas en innovación.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="materiales">
+  <div class="container">
+    <div class="section-label">Equipamiento técnico</div>
+    <h2 class="section-title">Materiales Utilizados</h2>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('chasis',this)">🔩 Chasis</button>
+      <button class="tab-btn" onclick="showTab('control',this)">🖥️ Control</button>
+      <button class="tab-btn" onclick="showTab('periferica',this)">📡 Periférica</button>
+      <button class="tab-btn" onclick="showTab('sensores',this)">💡 Sensórica</button>
+      <button class="tab-btn" onclick="showTab('electrico',this)">⚡ Eléctrico</button>
+      <button class="tab-btn" onclick="showTab('it',this)">🌐 IT</button>
+      <button class="tab-btn" onclick="showTab('robotica',this)">🤖 Robótica</button>
+    </div>
+    <div id="tab-chasis" class="tab-panel active">
+      <div class="materiales-grid">
+        <div class="mat-group"><div class="mat-header"><span>🔩</span> Chasis</div><div class="mat-body"><ul>
+          <li>Perfilería de aluminio 40×40, tornillería y elementos de unión</li>
+          <li>PLA para soportes</li><li>Planchas de policarbonato</li><li>Planchas metálicas</li><li>Tablero DM para carenados</li>
+        </ul></div></div>
+      </div>
+    </div>
+    <div id="tab-control" class="tab-panel">
+      <div class="materiales-grid">
+        <div class="mat-group"><div class="mat-header"><span>🖥️</span> Control principal</div><div class="mat-body"><ul>
+          <li>SIMATIC MTP700 Unified Comfort Panel — 6AV2128-3GB06-4AB1</li>
+          <li>SIMATIC CPU 1517TF-3 PN/DP Safety sin IO — 6ES7517-3UP00-4AB1</li>
+        </ul></div></div>
+      </div>
+    </div>
+    <div id="tab-periferica" class="tab-panel">
+      <div class="materiales-grid">
+        <div class="mat-group"><div class="mat-header"><span>📡</span> Periférica IO-Link</div><div class="mat-body"><ul>
+          <li>Maestro IO-Link PROFINET — IFM AL1306</li><li>Módulo entrada/salida IO-Link — IFM AL2301</li>
+        </ul></div></div>
+        <div class="mat-group"><div class="mat-header"><span>🛡️</span> Seguridad PROFIsafe</div><div class="mat-body"><ul>
+          <li>Módulo IO-Link PROFIsafe — IFM AL200S</li><li>SFB-PN-IRT-8M12-IOP-V2 SCHMERSAL</li>
+          <li>2× SCHMERSAL AZ16ZVRK-M16</li><li>2× SCHMERSAL AZ 15/16-B2-1747</li>
+          <li>SCHMERSAL AZM201Z-I2-ST2-T-1P2PW</li><li>SCHMERSAL BDF200-FB-NH-LT-LT-LT-2875</li>
+          <li>Caja antifraude pulsador emergencia 2NC 40mm — XALK178F</li>
+        </ul></div></div>
+      </div>
+    </div>
+    <div id="tab-sensores" class="tab-panel">
+      <div class="materiales-grid">
+        <div class="mat-group"><div class="mat-header"><span>💡</span> Sensórica y señalización</div><div class="mat-body"><ul>
+          <li>Baliza tricolor EMAS F5T024XM05-2</li><li>Cabeza pulsador seta 60mm negro — ZB5AR2</li>
+          <li>Bloque contacto 1NC — ZBE102</li><li>7× Fotocélulas</li>
+          <li>Actuador lineal eléctrico 24V, carrera 100mm</li><li>Solenoid open frame 24VDC — F0415L-24V</li>
+        </ul></div></div>
+        <div class="mat-group"><div class="mat-header"><span>📸</span> Visión artificial</div><div class="mat-body"><ul>
+          <li>Cámara HIK-MV-SC3016C-06M-WBN</li>
+        </ul></div></div>
+      </div>
+    </div>
+    <div id="tab-electrico" class="tab-panel">
+      <div class="materiales-grid">
+        <div class="mat-group"><div class="mat-header"><span>⚡</span> Elementos eléctricos</div><div class="mat-body"><ul>
+          <li>Seccionador, interruptores magnetotérmicos, diferenciales</li>
+          <li>Tomas Schucko DIN, borneros carril DIN, fusibles</li>
+          <li>Armario compacto AX 600×600×250 RAL7035 — RITTAL</li>
+          <li>SITOP PSE200U/4×3-10A/CSC SIEMENS — 6EP1961-2BA21</li>
+          <li>2× Minirelé para C.I. FINDER — 405290240000</li>
+          <li>Prensaestopas y HAN-KIT 16A HARTING</li>
+          <li>Logitech GROUP — kit videoconferencia</li>
+        </ul></div></div>
+      </div>
+    </div>
+    <div id="tab-it" class="tab-panel">
+      <div class="materiales-grid">
+        <div class="mat-group"><div class="mat-header"><span>🌐</span> Elementos IT</div><div class="mat-body"><ul>
+          <li>Scalance S615</li><li>2× Switch 8×RJ45 24VDC — 2682140000</li>
+          <li>Monitor LED Full HD 22" — ASUS VT229H</li>
+          <li>Lenovo ThinClient ThinCentre</li><li>Servidor Lenovo</li>
+          <li>Arduino Mega + RFID RC522 para lectura tarjeta RFID</li>
+        </ul></div></div>
+        <div class="mat-group"><div class="mat-header"><span>🔑</span> Licencias</div><div class="mat-body"><ul>
+          <li>ProfiSafe UR License</li>
+        </ul></div></div>
+      </div>
+    </div>
+    <div id="tab-robotica" class="tab-panel">
+      <div class="materiales-grid">
+        <div class="mat-group"><div class="mat-header"><span>🤖</span> Robótica</div><div class="mat-body"><ul>
+          <li>Robot UR3e</li><li>Kit gripper y kit visión</li>
+          <li>OnRobot EYES Kit — cámara + compute box + cables + soporte UR</li>
+          <li>OnRobot Lighting Eyes Kit — iluminación LED para Eyes</li>
+        </ul></div></div>
+      </div>
+    </div>
+
+    <div style="margin-top:2.5rem;">
+      <h3 style="font-family:'Syne',sans-serif;color:#0a2463;font-size:1.1rem;margin-bottom:1rem;font-weight:700;">Sinóptico del sistema</h3>
+      <div class="sinoptico-box">
+        <span class="icon-big">🗺️</span>
+        <h3 style="font-family:'Syne',sans-serif;color:#0a2463;margin-bottom:.5rem;">Imagen del sinóptico</h3>
+        <p>Aquí irá la imagen del sinóptico del sistema.<br><em>Sustitúyela en Google Sites con el bloque "Imagen".</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vision">
+  <div class="container">
+    <div class="section-label">Horizonte del proyecto</div>
+    <h2 class="section-title">Visión y Mejoras Futuras</h2>
+    <div class="vision-box">
+      <p>Embarcarlo en un sistema de <strong style="color:#fbbf24">conducción autónoma</strong>, y no solo para dar servicios de farmacia, sino de otro tipo como compras, paquetería, etc.</p>
+    </div>
+    <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:1rem;opacity:.85;">Líneas de mejora identificadas</h3>
+    <ul class="mejoras-list">
+      <li>Mejora del almacén mediante mini transelevador cartesiano para más referencias</li>
+      <li>Sistema de carga fotovoltaica con MPPT, BMS y baterías Li-ion / LiFePO₄ + inversor 24VDC a 230VAC</li>
+      <li>Reconocimiento de patrón mediante IA en lugar de técnicas tradicionales</li>
+      <li>Sustitución del sistema RFID por reconocimiento facial</li>
+      <li>Trazabilidad mediante cámara y almacenamiento en base de datos</li>
+      <li>Router SIM 5G para comunicaciones entre el vehículo y el centro de control</li>
+    </ul>
+  </div>
+</section>
+
+<section id="galeria" style="background:#f8fafc;">
+  <div class="container">
+    <div class="section-label">Imágenes y redes sociales</div>
+    <h2 class="section-title">Documentación Gráfica</h2>
+    <div class="galeria-grid">
+      <div class="galeria-item"><span>🖼️</span>Banco de imágenes 1</div>
+      <div class="galeria-item"><span>🖼️</span>Banco de imágenes 2</div>
+      <div class="galeria-item"><span>🖼️</span>Banco de imágenes 3</div>
+      <div class="galeria-item"><span>🖼️</span>Banco de imágenes 4</div>
+      <div class="galeria-item"><span>🖼️</span>Banco de imágenes 5</div>
+      <div class="galeria-item"><span>📱</span>Redes sociales</div>
+    </div>
+    <p style="color:#64748b;font-size:.82rem;margin-top:1.2rem;font-style:italic;">✏️ Sustituye estas celdas por tus imágenes reales en Google Sites usando el bloque "Carrusel" o "Galería de imágenes".</p>
+  </div>
+</section>
+
+<section id="documentacion">
+  <div class="container">
+    <div class="section-label">Repositorio técnico</div>
+    <h2 class="section-title">Documentación</h2>
+    <div class="doc-intro">
+      <p>La documentación técnica del proyecto está disponible <strong>bajo petición</strong>. Rellena el formulario indicando qué categoría te interesa y te la haremos llegar.</p>
+      <a href="#formulario" class="btn">Solicitar documentación</a>
+    </div>
+    <div class="doc-cats">
+      <div class="doc-cat"><h4>🤖 Automatización y robótica</h4><ul><li>Flujograma de automatización</li><li>Backup PLC</li><li>Backup Robot</li></ul></div>
+      <div class="doc-cat"><h4>⚡ Electricidad</h4><ul><li>Esquemas EPLAN</li></ul></div>
+      <div class="doc-cat"><h4>💻 Informática</h4><ul><li>Sinóptico</li><li>Backup Node-RED</li><li>Backup aplicaciones web</li><li>Backup BBDD MySQL 1</li><li>Backup BBDD MySQL 2</li></ul></div>
+      <div class="doc-cat"><h4>⚙️ Diseño mecánico</h4><ul><li>Diseños 3D</li><li>Esquemas</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="formulario">
+  <div class="container">
+    <div class="section-label">Solicitud de acceso</div>
+    <h2 class="section-title">Solicitar Documentación</h2>
+    <div class="form-wrap">
+      <p>Completa el formulario y nos pondremos en contacto contigo para facilitarte la documentación solicitada.</p>
+      <form id="solicitudForm">
+        <input type="hidden" name="access_key" value="1e3f2330-0f1a-4226-acdd-4270373316d8">
+        <input type="hidden" name="subject" value="Nueva solicitud de documentación — PHARMA-CO(bot)-LOGY">
+        <input type="hidden" name="from_name" value="Web PHARMA-CO(bot)-LOGY">
+        <div class="form-group"><label>Nombre completo *</label><input type="text" name="nombre" placeholder="Tu nombre y apellidos" required></div>
+        <div class="form-group"><label>Correo electrónico *</label><input type="email" name="email" placeholder="tu@email.com" required></div>
+        <div class="form-group"><label>Centro / Institución</label><input type="text" name="centro" placeholder="Centro educativo o empresa"></div>
+        <div class="form-group">
+          <label>Documentación solicitada *</label>
+          <select name="documentacion" required>
+            <option value="">— Selecciona una categoría —</option>
+            <option>Automatización y robótica</option>
+            <option>Flujograma automatización</option>
+            <option>Backup PLC</option>
+            <option>Backup Robot</option>
+            <option>Electricidad — Esquemas EPLAN</option>
+            <option>Sinóptico</option>
+            <option>Backup Node-RED</option>
+            <option>Backup aplicaciones web</option>
+            <option>Backup BBDD MySQL</option>
+            <option>Diseños 3D</option>
+            <option>Esquemas mecánicos</option>
+            <option>Banco de imágenes</option>
+            <option>Apariciones en redes sociales</option>
+            <option>Toda la documentación</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Motivo de la solicitud</label><textarea name="motivo" placeholder="Indica brevemente para qué necesitas la documentación…"></textarea><div class="form-note">Esta información nos ayuda a gestionar mejor tu solicitud.</div></div>
+        <div id="formMsg" style="display:none;padding:.8rem 1rem;border-radius:8px;font-size:.88rem;margin-bottom:1rem;"></div>
+        <button type="submit" class="btn verde" id="submitBtn" style="width:100%;padding:.8rem;">Enviar solicitud</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div style="background:#fff; padding: 1.2rem 2rem; text-align:center;">
+    <img src="logos-institucionales.png" alt="Ministerio de Educación, FP y Deportes · Plan de Recuperación, Transformación y Resiliencia · Financiado por la Unión Europea NextGenerationEU · Secretaría General de Formación Profesional" style="max-width:100%; height:auto; max-height:60px;">
+  </div>
+  <div style="padding:1.5rem 2rem; text-align:center;">
+    <p><strong>PHARMA-CO(bot)-LOGY</strong> — Referencia AINN23/00109</p>
+    <p style="margin-top:.4rem;">Convocatoria de ayudas BOE núm. 209 · 01 de septiembre de 2023</p>
+  </div>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav ul li a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const link = document.querySelector('nav a[href="#' + e.target.id + '"]');
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Web3Forms
+  const form = document.getElementById('solicitudForm');
+  const formMsg = document.getElementById('formMsg');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    submitBtn.textContent = 'Enviando…';
+    submitBtn.disabled = true;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      if (result.success) {
+        formMsg.style.display = 'block';
+        formMsg.style.background = '#f0fdf4';
+        formMsg.style.border = '1px solid #86efac';
+        formMsg.style.color = '#166534';
+        formMsg.textContent = '✅ Solicitud enviada correctamente. Nos pondremos en contacto contigo en breve.';
+        form.reset();
+      } else { throw new Error(); }
+    } catch {
+      formMsg.style.display = 'block';
+      formMsg.style.background = '#fef2f2';
+      formMsg.style.border = '1px solid #fca5a5';
+      formMsg.style.color = '#991b1b';
+      formMsg.textContent = '❌ Ha ocurrido un error. Por favor, inténtalo de nuevo.';
+    }
+    submitBtn.textContent = 'Enviar solicitud';
+    submitBtn.disabled = false;
+  });
+
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
